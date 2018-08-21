@@ -37,6 +37,8 @@ export default {
         addBook() {
             console.log(this.book);
             this.$store.dispatch('addBook', this.book);
+            this.book.title = '';
+            this.book.description = '';
         }
     }
 }

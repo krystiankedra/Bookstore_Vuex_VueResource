@@ -11,7 +11,11 @@
             <button class="btn btn-danger" @click="deleteBook(book.id)">Delete Book</button>
         </div>
         <div class="pull-right">
-            <button class="btn btn-success">Edit Book</button>
+            <button class="btn btn-success" @click="showEditGroup">Edit Book</button>
+        </div>
+        <div v-if="showEdit" class="form-group margin-edit-group">
+          <label>Title:</label> <input class="form-control">
+          <label>Description:</label> <input class="form-control">
         </div>
       </div>
     </div>
@@ -21,6 +25,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      showEdit: false,
+    }
+  },
   props: ['book', 'index'],
   methods: {
     deleteBook(bookId) {
@@ -29,6 +38,9 @@ export default {
         index: this.index
       }
       this.$store.dispatch('deleteBook', book);
+    },
+    showEditGroup() {
+      this.showEdit = !this.showEdit;
     }
   }
 }
@@ -36,3 +48,8 @@ export default {
 
 
 
+<style scoped>
+.margin-edit-group {
+  margin-top:40px;
+}
+</style>

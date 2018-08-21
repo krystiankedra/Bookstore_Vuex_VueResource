@@ -17,7 +17,6 @@ const getters = {
 const mutations = {
     'ADD_NEW_BOOK': (state,payload) => {
         state.books = payload
-        console.log(payload);
     },
     'SET_BOOKS': (state, payload) => {
         state.books = payload

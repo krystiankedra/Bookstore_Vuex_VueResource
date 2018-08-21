@@ -14,8 +14,9 @@
             <button class="btn btn-success" @click="showEditGroup">Edit Book</button>
         </div>
         <div v-if="showEdit" class="form-group margin-edit-group">
-          <label>Title:</label> <input class="form-control">
-          <label>Description:</label> <input class="form-control">
+          <label>Title:</label> <input class="form-control" v-model="newTitle">
+          <label>Description:</label> <textarea class="form-control" v-model="newDescription" rows="4" cols="50"></textarea>
+          <button class="btn btn-primary" @click="saveEditedData(book.id)">Save</button>
         </div>
       </div>
     </div>
@@ -28,6 +29,8 @@ export default {
   data() {
     return {
       showEdit: false,
+      newTitle: '',
+      newDescription:'',
     }
   },
   props: ['book', 'index'],
@@ -41,7 +44,17 @@ export default {
     },
     showEditGroup() {
       this.showEdit = !this.showEdit;
-    }
+    },
+    saveEditedData(bookId) {
+      const Editedbook = {
+        title: this.newTitle,
+        description: this.newDescription,
+        bookId: bookId,
+        index: this.index,
+      }
+      this.$store.dispatch('updateBook', Editedbook)
+      this.showEdit = false;
+    },
   }
 }
 </script>

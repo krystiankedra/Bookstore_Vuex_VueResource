@@ -8,6 +8,7 @@ import VueResource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueResource);
 
+Vue.http.options.root = 'http://bootcamp.opole.pl/books/';
 
 const router = new VueRouter({
   routes,

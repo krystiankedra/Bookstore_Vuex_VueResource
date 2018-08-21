@@ -23,6 +23,10 @@ const mutations = {
     },
     'DELETE_BOOK': (state,payload) => {
       state.books.splice(payload.index , 1)
+    },
+    'UPDATE_BOOK': (state,payload) => {
+        state.books[payload.index].title = payload.title
+        state.books[payload.index].description = payload.description
     }
 }
 
@@ -30,7 +34,7 @@ const mutations = {
 
 const actions = {
     addBook({commit},payload) {
-        Vue.http.post('http://bootcamp.opole.pl/books/add-book/87f4', payload ,  {
+        Vue.http.post('add-book/87f4', payload ,  {
             emulateJSON: true 
         })
         .then(response => {
@@ -41,7 +45,7 @@ const actions = {
         commit('ADD_NEW_BOOK', payload)
     },
     loadBooks ({ commit }) {
-          Vue.http.get('http://bootcamp.opole.pl/books/my-books/87f4')
+          Vue.http.get('my-books/87f4')
           .then(response => {
             return response.body.books
           })
@@ -55,13 +59,27 @@ const actions = {
       },
     deleteBook({commit}, payload) {
         console.log(payload);
-        Vue.http.delete('http://bootcamp.opole.pl/books/delete-book/' + payload.bookId + '/87f4')
+        Vue.http.delete('delete-book/' + payload.bookId + '/87f4')
         .then(response => {
             console.log(response);
         }, error=> {
             console.log(error);
         })
         commit('DELETE_BOOK', payload)
+    },
+    updateBook({commit}, payload) {
+        Vue.http.post('edit-book/' + payload.bookId + '/87f4', {
+            title: payload.title,
+            description: payload.description
+        } , {
+            emulateJSON: true 
+        })
+        .then(response => {
+            console.log(response);
+        }, error=> {
+            console.log(error);
+        })
+        commit('UPDATE_BOOK', payload)
     }
 }
 

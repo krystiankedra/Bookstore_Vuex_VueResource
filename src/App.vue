@@ -22,7 +22,6 @@ export default {
 <style>
   body {
     padding:30px;
-    background: url("./assets/background.jpg")
   }
   .slide-enter-active {
     animation: slide-in 500ms ease-out forwards;

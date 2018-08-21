@@ -12,7 +12,7 @@
             <div class="form-group col-md-6">
                 <label for="lastname" class="col-2 col-form-label">Description:</label>
             <div class="col-10">
-                <textarea class="form-control" type="text" v-model="book.description" rows="4" cols="50"></textarea>
+                <textarea class="form-control" type="text" v-model="book.description" rows="4"></textarea>
             </div>
             </div>
         </div>
@@ -20,7 +20,6 @@
         <button class="btn btn-success" @click.prevent="addBook">Add New Book</button>
         </div>
     </div>
-
 </form>
 </template>
 

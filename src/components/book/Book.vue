@@ -16,7 +16,7 @@
         <div v-if="showEdit" class="form-group margin-edit-group">
           <label>Title:</label> <input class="form-control" v-model="newTitle">
           <label>Description:</label> <textarea class="form-control" v-model="newDescription" rows="4" cols="50"></textarea>
-          <button class="btn btn-primary" @click="saveEditedData(book.id)">Save</button>
+          <button class="btn btn-primary margin-button-top" @click="saveEditedData(book.id)">Save</button>
         </div>
       </div>
     </div>
@@ -53,6 +53,8 @@ export default {
         index: this.index,
       }
       this.$store.dispatch('updateBook', Editedbook)
+      this.newTitle = ''
+      this.newDescription = ''
       this.showEdit = false;
     },
   }
@@ -64,5 +66,8 @@ export default {
 <style scoped>
 .margin-edit-group {
   margin-top:40px;
+}
+.margin-button-top {
+  margin-top:10px;
 }
 </style>

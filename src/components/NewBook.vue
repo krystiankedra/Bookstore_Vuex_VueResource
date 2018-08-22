@@ -25,29 +25,29 @@
 
 <script>
 export default {
-    data() {
-        return {
-            book: {
-                title: '',
-                description: '',
-            }
-        }
-    },
-    methods: {
-        addBook() {
-            console.log(this.book);
-            this.$store.dispatch('addBook', this.book);
-            this.book.title = '';
-            this.book.description = '';
-        }
+  data() {
+    return {
+      book: {
+        title: "",
+        description: ""
+      }
+    };
+  },
+  methods: {
+    addBook() {
+      console.log(this.book);
+      this.$store.dispatch("addBook", this.book);
+      this.book.title = "";
+      this.book.description = "";
     }
-}
+  }
+};
 </script>
 
 
 <style scoped>
-    form {
-        margin-top:10px;
-    }
+form {
+  margin-top: 10px;
+}
 </style>
 

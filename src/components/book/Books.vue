@@ -3,7 +3,7 @@
       <div class="col-md-12 margin-block">
         <div class="row">
           <div class="col-md-8">
-            <input type="text" v-model="filterBook" class="form-control input-filter-margin-bottom" placeholder="Search...">
+            <input type="text" v-model="filtredBookInputs" class="form-control input-filter-margin-bottom" placeholder="Search...">
           </div>
           <div class="col-md-2">
             <button class="btn btn-primary" 
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <app-book v-for="(book,index) in books" :key="book.id" :book="book" :index="index"></app-book>
+      <app-book v-for="(book,index) in filteredBooks" :key="book.id" :book="book" :index="index"></app-book>
     </div>
 </template>
 
@@ -26,9 +26,9 @@ import Book from "./Book.vue";
 export default {
   data() {
     return {
-      filterBook: "",
       sortTitleValue: false,
-      sortDescriptionValue: false
+      sortDescriptionValue: false,
+      filtredBookInputs: ""
     };
   },
   components: {
@@ -40,27 +40,35 @@ export default {
   computed: {
     books() {
       return this.$store.getters.books;
+    },
+    filteredBooks() {
+      return this.$store.getters.books.filter(element => {
+        return (
+          element.title.toLowerCase().indexOf(this.filtredBookInputs.toLowerCase()) > -1 ||
+          element.description.toLowerCase().indexOf(this.filtredBookInputs.toLowerCase()) > -1
+        );
+      });
     }
   },
   methods: {
     sortTitle(value) {
       if (!value) {
-        this.sortTitleValue = true
-        this.$store.dispatch('sortTitle', value)
+        this.sortTitleValue = true;
+        this.$store.dispatch("sortTitle", value);
       } else {
-        this.sortTitleValue = false
-        this.$store.dispatch('sortTitle', value)
+        this.sortTitleValue = false;
+        this.$store.dispatch("sortTitle", value);
       }
     },
     sortDescription(value) {
       if (!value) {
-        this.sortDescriptionValue = true
-        this.$store.dispatch('sortDescription', value)
+        this.sortDescriptionValue = true;
+        this.$store.dispatch("sortDescription", value);
       } else {
-        this.sortDescriptionValue = false
-        this.$store.dispatch('sortDescription', value)
+        this.sortDescriptionValue = false;
+        this.$store.dispatch("sortDescription", value);
       }
-    },
+    }
   }
 };
 </script>

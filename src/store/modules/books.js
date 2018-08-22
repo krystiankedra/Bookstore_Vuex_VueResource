@@ -12,7 +12,7 @@ const state = {
 const getters = {
     books: state => {
         return state.books;
-    }
+    },
 }
 
 
@@ -57,7 +57,7 @@ const mutations = {
                 element1.description < element2.description ? 1 : -1
             );
           }
-    }
+    },
 }
 
 
@@ -75,7 +75,6 @@ const actions = {
         commit('ADD_NEW_BOOK', payload)
     },
     deleteBook({ commit }, payload) {
-        console.log(payload);
         Vue.http.delete('http://bootcamp.opole.pl/books/delete-book/' + payload.bookId + '/87f4')
             .then(response => {
                 console.log(response);
@@ -127,7 +126,7 @@ const actions = {
     },
     sortDescription({commit}, payload) {
         commit('SORT_DESCRIPTION', payload)
-    }
+    },
 }
 
 export default {

@@ -31,18 +31,18 @@ export default {
   data() {
     return {
       showEdit: false,
-      newTitle: '',
-      newDescription:'',
-    }
+      newTitle: "",
+      newDescription: ""
+    };
   },
-  props: ['book', 'index'],
+  props: ["book", "index"],
   methods: {
     deleteBook(bookId) {
       const book = {
         bookId: bookId,
         index: this.index
-      }
-      this.$store.dispatch('deleteBook', book);
+      };
+      this.$store.dispatch("deleteBook", book);
     },
     showEditGroup() {
       this.showEdit = !this.showEdit;
@@ -52,25 +52,24 @@ export default {
         title: this.newTitle,
         description: this.newDescription,
         bookId: bookId,
-        index: this.index,
-      }
-      this.$store.dispatch('updateBook', Editedbook)
-      this.newTitle = ''
-      this.newDescription = ''
+        index: this.index
+      };
+      this.$store.dispatch("updateBook", Editedbook);
+      this.newTitle = "";
+      this.newDescription = "";
       this.showEdit = false;
-    },
-
+    }
   }
-}
+};
 </script>
 
 
 
 <style scoped>
 .margin-edit-group {
-  margin-top:40px;
+  margin-top: 40px;
 }
 .margin-button-top {
-  margin-top:10px;
+  margin-top: 10px;
 }
 </style>

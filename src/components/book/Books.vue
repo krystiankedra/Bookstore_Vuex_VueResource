@@ -1,31 +1,83 @@
 <template>
     <div class="row row-margin-top">
-        <app-book v-for="(book,index) in books" :key="book.id" :book="book" :index="index"></app-book>
+      <div class="col-md-12 margin-block">
+        <div class="row">
+          <div class="col-md-8">
+            <input type="text" v-model="filterBook" class="form-control input-filter-margin-bottom" placeholder="Search...">
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary" 
+              :class="[sortTitleValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
+              @click="sortTitle(sortTitleValue)">Sort Title</button>
+            </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary" 
+              :class="[sortDescriptionValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
+              @click="sortDescription(sortDescriptionValue)">Sort Description</button>
+          </div>
+        </div>
+      </div>
+      <app-book v-for="(book,index) in books" :key="book.id" :book="book" :index="index"></app-book>
     </div>
 </template>
 
 <script>
-import Book from './Book.vue';
+import Book from "./Book.vue";
 export default {
-    components: {
-        appBook:Book
-    },
-    mounted() {
-        this.$store.dispatch('loadBooks')
-    },
-    computed: {
-      books() {
-          return this.$store.getters.books;
-      }
+  data() {
+    return {
+      filterBook: "",
+      sortTitleValue: false,
+      sortDescriptionValue: false
+    };
+  },
+  components: {
+    appBook: Book
+  },
+  mounted() {
+    this.$store.dispatch("loadBooks");
+  },
+  computed: {
+    books() {
+      return this.$store.getters.books;
     }
-}
+  },
+  methods: {
+    sortTitle(value) {
+      if (!value) {
+        this.sortTitleValue = true
+        this.$store.dispatch('sortTitle', value)
+      } else {
+        this.sortTitleValue = false
+        this.$store.dispatch('sortTitle', value)
+      }
+    },
+    sortDescription(value) {
+      if (!value) {
+        this.sortDescriptionValue = true
+        this.$store.dispatch('sortDescription', value)
+      } else {
+        this.sortDescriptionValue = false
+        this.$store.dispatch('sortDescription', value)
+      }
+    },
+  }
+};
 </script>
 
 
 <style scoped>
-    .row-margin-top {
-        margin-top:10px;
-    }
+.row-margin-top {
+  margin-top: 10px;
+}
+
+.input-filter-margin-bottom {
+  margin-bottom: 20px;
+}
+
+.margin-block {
+  margin: 20px;
+}
 </style>
 
 

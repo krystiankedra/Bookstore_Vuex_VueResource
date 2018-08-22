@@ -1,7 +1,9 @@
 <template>
  <div class="col-md-4">
     <div class="panel panel-primary">
-      <div class="panel-heading">ID: {{book.id}}</div>
+      <div class="panel-heading">
+        <span>ID: {{book.id}}</span>
+        </div>
       <div class="panel-body">
         <p>Title: {{book.title}}</p>
         <p class="text-justify">Index: {{index}}</p>
@@ -57,6 +59,7 @@ export default {
       this.newDescription = ''
       this.showEdit = false;
     },
+
   }
 }
 </script>

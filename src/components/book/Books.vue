@@ -8,12 +8,12 @@
           <div class="col-md-2">
             <button class="btn btn-primary" 
               :class="[sortTitleValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
-              @click="sortTitle(sortTitleValue)">Sort Title</button>
+              @click="sortTitle(sortTitleValue = !sortTitleValue)">Sort Title</button>
             </div>
           <div class="col-md-2">
             <button class="btn btn-primary" 
               :class="[sortDescriptionValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
-              @click="sortDescription(sortDescriptionValue)">Sort Description</button>
+              @click="sortDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
           </div>
         </div>
       </div>
@@ -53,19 +53,15 @@ export default {
   methods: {
     sortTitle(value) {
       if (!value) {
-        this.sortTitleValue = true;
         this.$store.dispatch("sortTitle", value);
       } else {
-        this.sortTitleValue = false;
         this.$store.dispatch("sortTitle", value);
       }
     },
     sortDescription(value) {
       if (!value) {
-        this.sortDescriptionValue = true;
         this.$store.dispatch("sortDescription", value);
       } else {
-        this.sortDescriptionValue = false;
         this.$store.dispatch("sortDescription", value);
       }
     }

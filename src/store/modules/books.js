@@ -34,12 +34,12 @@ const mutations = {
         if (!payload) {
             state.sortTitleValue = true;
             return state.books.sort(
-              (element1, element2) => (element1.title < element2.title ? -1 : 1)
+              (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? -1 : 1)
             );
           } else {
             state.sortTitleValue = false;
             return state.books.sort(
-              (element1, element2) => (element1.title < element2.title ? 1 : -1)
+              (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? 1 : -1)
             );
           }
     },

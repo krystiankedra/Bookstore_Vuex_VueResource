@@ -9,7 +9,7 @@
         <p><strong>Title:</strong> {{book.title}}</p>
         <p class="text-justify">Index: {{index}}</p>
         <p class="text-justify"><strong>Description:</strong> {{book.description}}</p>
-        <p class="text-justify"><strong>Average:</strong> {{average == Number(average) ? Number(average.toFixed(2)) : 'Book From JSON'}}</p>
+        <p class="text-justify"><strong>Average:</strong> {{average == Number(average) ? Number(average.toFixed(2)) : 'No Rate Here'}}</p>
       <div class="panel-footer">
         <div class="pull-left">
             <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i>Delete Book</button>
@@ -85,7 +85,7 @@ export default {
         index: this.index,
         checked: this.checkedBookInput,
       }
-      this.$store.dispatch('checkedBooks', checkedBookDelete)
+      this.$store.dispatch('checkedBook', checkedBookDelete)
     }
   },
   computed: {

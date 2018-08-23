@@ -22,7 +22,7 @@ const getters = {
 
 const mutations = {
     'ADD_NEW_BOOK': (state, payload) => {
-        state.books.push(payload)
+        state.books.unshift(payload)
     },
     'SET_BOOKS': (state, payload) => {
         state.books = payload
@@ -70,6 +70,15 @@ const mutations = {
     },
     'UPDATE_RATE': (state, payload) => {
         state.rates = payload;
+    },
+    'CHECKED_BOOK' : (state,payload) => {
+        if (payload.checked) {
+            state.selectedBooks.push(payload)
+        } else if (!payload.checked){
+            state.selectedBooks.splice(payload.index, 1)
+        } else {
+            state.selectedBooks.splice(payload.index, 1)
+        }
     }
 }
 
@@ -95,6 +104,7 @@ const actions = {
         commit('DELETE_BOOK', payload)
     },
     updateBook({ commit }, payload) {
+        const ratesList = [];
         Vue.http.post('http://bootcamp.opole.pl/books/edit-book/' + payload.bookId + '/87f4', {
             title: payload.title,
             description: payload.description
@@ -102,33 +112,30 @@ const actions = {
                 emulateJSON: true
             })
             .then(response => {
-                console.log(response);
-            }, error => {
-                console.log(error);
-            })
-        const ratesList = [];
-        Vue.http.post('http://bootcamp.opole.pl/books/rate/87f4', {
-            id: payload.bookId,
-            rate: payload.newRate
-        }, {
-                emulateJSON: true
-            })
-            .then(response => {
-                Vue.http.get('http://bootcamp.opole.pl/books/my-rates/87f4')
-                    .then(response => {
-                        return response.body.rates
+                Vue.http.post('http://bootcamp.opole.pl/books/rate/87f4', {
+                    id: payload.bookId,
+                    rate: payload.newRate
+                }, {
+                        emulateJSON: true
                     })
-                    .then(data => {
-                        for (let key in data) {
-                            ratesList.push(data[key])
-                        }
+                    .then(response => {
+                        Vue.http.get('http://bootcamp.opole.pl/books/my-rates/87f4')
+                            .then(response => {
+                                return response.body.rates
+                            })
+                            .then(data => {
+                                for (let key in data) {
+                                    ratesList.push(data[key])
+                                }
+                                commit('UPDATE_RATE', ratesList)
+                            })
+                    }, error => {
+                        console.log(error);
                     })
             }, error => {
                 console.log(error);
             })
         commit('UPDATE_BOOK', payload)
-        commit('UPDATE_RATE', ratesList)
-
     },
     loadBooks({ commit }) {
         const bookList = [];
@@ -171,15 +178,11 @@ const actions = {
     sortDescription({ commit }, payload) {
         commit('SORT_DESCRIPTION', payload)
     },
-    checkedBooks({ commit }, payload) {
-        if (payload.checked) {
-            state.selectedBooks.push(payload)
-        } else {
-            state.selectedBooks.splice(payload.index, 1)
-        }
+    checkedBook({ commit }, payload) {
+        commit('CHECKED_BOOK',payload)
     },
     deleteSelectedBooks({ commit }) {
-        for (let i = 0; state.selectedBooks.length > i; i++) {
+        for (let i = 0; state.selectedBooks.length > i; ++i) {
             Vue.http.delete('http://bootcamp.opole.pl/books/delete-book/' + state.selectedBooks[i].bookId + '/87f4')
                 .then(response => {
                     console.log(response);

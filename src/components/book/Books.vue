@@ -7,17 +7,17 @@
           </div>
           <div class="col-md-2">
             <button class="btn btn-primary" 
-              :class="[sortTitleValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
+              :class="[sortTitleValue ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up']" 
               @click="sortTitle(sortTitleValue = !sortTitleValue)">Sort Title</button>
             </div>
           <div class="col-md-2">
             <button class="btn btn-primary" 
-              :class="[sortDescriptionValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
+              :class="[sortDescriptionValue ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up']" 
               @click="sortDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary"
-              @click="deleteSelectedBooks">Delete Selected</button>
+            <button class="btn btn-warning"
+              @click="deleteSelectedBooks"><i class="fas fa-trash-alt"></i>Delete Selected</button>
           </div>
         </div>
       </div>

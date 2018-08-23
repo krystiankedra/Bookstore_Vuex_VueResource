@@ -6,22 +6,22 @@
         <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right" v-model="checkedBookInput" @input="checkedBook(book.id)">
         </div>
       <div class="panel-body">
-        <p>Title: {{book.title}}</p>
+        <p><strong>Title:</strong> {{book.title}}</p>
         <p class="text-justify">Index: {{index}}</p>
-        <p class="text-justify">Description: {{book.description}}</p>
-        <p class="text-justify">Average: {{average}}</p>
+        <p class="text-justify"><strong>Description:</strong> {{book.description}}</p>
+        <p class="text-justify"><strong>Average:</strong> {{average == Number(average) ? Number(average.toFixed(2)) : 'Book From JSON'}}</p>
       <div class="panel-footer">
         <div class="pull-left">
-            <button class="btn btn-danger" @click="deleteBook(book.id)">Delete Book</button>
+            <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i>Delete Book</button>
         </div>
         <div class="pull-right">
-            <button class="btn btn-success" @click="showEditGroup">Edit Book</button>
+            <button class="btn btn-success" @click="showEditGroup"><i class="fas fa-user-edit"></i>Edit Book</button>
         </div>
         <div v-if="showEdit" class="form-group margin-edit-group">
-          <label>Title:</label> <input class="form-control" v-model="newTitle">
-          <label>Description:</label> <textarea class="form-control" v-model="newDescription" rows="4" cols="50"></textarea>
-          <label>New Rate:</label><input type="number" class="form-control" v-model="newRate">
-          <button class="btn btn-primary margin-button-top" @click="saveEditedData(book.id)">Save</button>
+          <label>Title:</label> <input class="form-control" :placeholder="book.title" v-model="newTitle">
+          <label>Description:</label> <textarea class="form-control" :placeholder="book.description" v-model="newDescription" rows="6" cols="50"></textarea>
+          <label>New Rate:</label><input type="number" min="1" max="5" :placeholder="average" class="form-control" v-model="newRate">
+          <button class="btn btn-primary margin-button-top" @click="saveEditedData(book.id)"><i class="fas fa-cloud"></i>Save</button>
         </div>
       </div>
     </div>
@@ -34,7 +34,9 @@ export default {
   data() {
     return {
       showAverage: false,
-      average:null,
+      average: {
+        type: Number
+      },
       showEdit: false,
       newTitle: "",
       newDescription: "",
@@ -87,19 +89,14 @@ export default {
     }
   },
   computed: {
-    rates() {
-      return this.$store.getters.rates
-    },
     filteredRates() {
-      return this.rates.filter(element => {
+      return this.$store.getters.rates.filter(element => {
         if(element.book == this.book.id) {
         this.average = element.sum / element.rates
         }
       })
-      return this.average;
     }
   },
-
 };
 </script>
 

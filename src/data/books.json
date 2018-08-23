@@ -3,7 +3,8 @@
     {
       "id": "From JsonFile1",
       "title": "You Don't Know JS: Up & Going",
-      "description": "It’s easy to learn parts of JavaScript, but much harder to learn it completely or even sufficiently whether you’re new to the language or have used it for years. You’ll get a more complete understanding of JavaScript."
+      "description": "It’s easy to learn parts of JavaScript, but much harder to learn it completely or even sufficiently whether you’re new to the language or have used it for years. You’ll get a more complete understanding of JavaScript.",
+      "average" : "JSON"
     },
     {
       "id": "From JsonFile2",

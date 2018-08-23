@@ -20,10 +20,9 @@ const getters = {
     }
 }
 
-
 const mutations = {
     'ADD_NEW_BOOK': (state, payload) => {
-        state.books = payload
+        state.books.push(payload)
     },
     'SET_BOOKS': (state, payload) => {
         state.books = payload
@@ -50,13 +49,13 @@ const mutations = {
     },
     'SORT_DESCRIPTION': (state, payload) => {
         if (!payload) {
-            state.sortDescriptionValue = true;
+            state.sortDescriptionValue = !state.sortDescriptionValue;
             return state.books.sort(
                 (element1, element2) =>
                     element1.description < element2.description ? -1 : 1
             );
         } else {
-            state.sortDescriptionValue = false;
+            state.sortDescriptionValue = !state.sortDescriptionValue;
             return state.books.sort(
                 (element1, element2) =>
                     element1.description < element2.description ? 1 : -1
@@ -69,12 +68,10 @@ const mutations = {
     'SET_RATES': (state, payload) => {
         state.rates = payload
     },
-    'UPDATE_RATE': (state,payload) => {
-        //
+    'UPDATE_RATE': (state, payload) => {
+        state.rates = payload;
     }
 }
-
-
 
 const actions = {
     addBook({ commit }, payload) {
@@ -109,7 +106,7 @@ const actions = {
             }, error => {
                 console.log(error);
             })
-            commit('UPDATE_BOOK', payload)
+        const ratesList = [];
         Vue.http.post('http://bootcamp.opole.pl/books/rate/87f4', {
             id: payload.bookId,
             rate: payload.newRate
@@ -117,11 +114,21 @@ const actions = {
                 emulateJSON: true
             })
             .then(response => {
-                console.log(response);
+                Vue.http.get('http://bootcamp.opole.pl/books/my-rates/87f4')
+                    .then(response => {
+                        return response.body.rates
+                    })
+                    .then(data => {
+                        for (let key in data) {
+                            ratesList.push(data[key])
+                        }
+                    })
             }, error => {
                 console.log(error);
             })
-        commit('UPDATE_RATE', payload)
+        commit('UPDATE_BOOK', payload)
+        commit('UPDATE_RATE', ratesList)
+
     },
     loadBooks({ commit }) {
         const bookList = [];

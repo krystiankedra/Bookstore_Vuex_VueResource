@@ -7,12 +7,17 @@ const state = {
     books: [],
     sortTitleValue: false,
     sortDescriptionValue: false,
+    selectedBooks: [],
+    rates: [],
 }
 
 const getters = {
     books: state => {
         return state.books;
     },
+    rates: state => {
+        return state.rates;
+    }
 }
 
 
@@ -30,34 +35,43 @@ const mutations = {
         state.books[payload.index].title = payload.title
         state.books[payload.index].description = payload.description
     },
-    'SORT_TITLE': (state,payload) => {
+    'SORT_TITLE': (state, payload) => {
         if (!payload) {
             state.sortTitleValue = true;
             return state.books.sort(
-              (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? -1 : 1)
+                (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? -1 : 1)
             );
-          } else {
+        } else {
             state.sortTitleValue = false;
             return state.books.sort(
-              (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? 1 : -1)
+                (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? 1 : -1)
             );
-          }
+        }
     },
-    'SORT_DESCRIPTION': (state,payload) => {
+    'SORT_DESCRIPTION': (state, payload) => {
         if (!payload) {
             state.sortDescriptionValue = true;
             return state.books.sort(
-              (element1, element2) =>
-                element1.description < element2.description ? -1 : 1
+                (element1, element2) =>
+                    element1.description < element2.description ? -1 : 1
             );
-          } else {
+        } else {
             state.sortDescriptionValue = false;
             return state.books.sort(
-              (element1, element2) =>
-                element1.description < element2.description ? 1 : -1
+                (element1, element2) =>
+                    element1.description < element2.description ? 1 : -1
             );
-          }
+        }
     },
+    'DELETE_SELECTED_BOOK': (state, payload) => {
+        state.books.splice(payload, 1)
+    },
+    'SET_RATES': (state, payload) => {
+        state.rates = payload
+    },
+    'UPDATE_RATE': (state,payload) => {
+        //
+    }
 }
 
 
@@ -95,10 +109,23 @@ const actions = {
             }, error => {
                 console.log(error);
             })
-        commit('UPDATE_BOOK', payload)
+            commit('UPDATE_BOOK', payload)
+        Vue.http.post('http://bootcamp.opole.pl/books/rate/87f4', {
+            id: payload.bookId,
+            rate: payload.newRate
+        }, {
+                emulateJSON: true
+            })
+            .then(response => {
+                console.log(response);
+            }, error => {
+                console.log(error);
+            })
+        commit('UPDATE_RATE', payload)
     },
     loadBooks({ commit }) {
         const bookList = [];
+        const ratesList = [];
         Vue.http.get('http://bootcamp.opole.pl/books/my-books/87f4')
             .then(response => {
                 return response.body.books
@@ -111,6 +138,15 @@ const actions = {
                         console.log(error);
                     })
                     .then(data => {
+                        Vue.http.get('http://bootcamp.opole.pl/books/my-rates/87f4')
+                            .then(response => {
+                                return response.body.rates
+                            })
+                            .then(data => {
+                                for (let key in data) {
+                                    ratesList.push(data[key])
+                                }
+                            })
                         for (let key in data) {
                             bookList.push(data[key])
                         }
@@ -120,12 +156,32 @@ const actions = {
                 }
             })
         commit('SET_BOOKS', bookList)
+        commit('SET_RATES', ratesList)
     },
-    sortTitle({commit}, payload) {
+    sortTitle({ commit }, payload) {
         commit('SORT_TITLE', payload)
     },
-    sortDescription({commit}, payload) {
+    sortDescription({ commit }, payload) {
         commit('SORT_DESCRIPTION', payload)
+    },
+    checkedBooks({ commit }, payload) {
+        if (payload.checked) {
+            state.selectedBooks.push(payload)
+        } else {
+            state.selectedBooks.splice(payload.index, 1)
+        }
+    },
+    deleteSelectedBooks({ commit }) {
+        for (let i = 0; state.selectedBooks.length > i; i++) {
+            Vue.http.delete('http://bootcamp.opole.pl/books/delete-book/' + state.selectedBooks[i].bookId + '/87f4')
+                .then(response => {
+                    console.log(response);
+                }, error => {
+                    console.log(error);
+                })
+            console.log(state.selectedBooks[i].index);
+            commit('DELETE_SELECTED_BOOK', state.selectedBooks[i].index)
+        }
     },
 }
 

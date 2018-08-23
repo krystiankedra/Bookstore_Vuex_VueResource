@@ -2,7 +2,7 @@
     <div class="row row-margin-top">
       <div class="col-md-12 margin-block">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <input type="text" v-model="filtredBookInputs" class="form-control input-filter-margin-bottom" placeholder="Search...">
           </div>
           <div class="col-md-2">
@@ -14,6 +14,10 @@
             <button class="btn btn-primary" 
               :class="[sortDescriptionValue ? 'fas fa-arrow-down' : 'fas fa-arrow-up']" 
               @click="sortDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary"
+              @click="deleteSelectedBooks">Delete Selected</button>
           </div>
         </div>
       </div>
@@ -42,13 +46,17 @@ export default {
       return this.$store.getters.books;
     },
     filteredBooks() {
-      return this.$store.getters.books.filter(element => {
+      return this.books.filter(element => {
         return (
-          element.title.toLowerCase().indexOf(this.filtredBookInputs.toLowerCase()) > -1 ||
-          element.description.toLowerCase().indexOf(this.filtredBookInputs.toLowerCase()) > -1
+          element.title
+            .toLowerCase()
+            .indexOf(this.filtredBookInputs.toLowerCase()) > -1 ||
+          element.description
+            .toLowerCase()
+            .indexOf(this.filtredBookInputs.toLowerCase()) > -1
         );
       });
-    }
+    },
   },
   methods: {
     sortTitle(value) {
@@ -64,8 +72,11 @@ export default {
       } else {
         this.$store.dispatch("sortDescription", value);
       }
+    },
+    deleteSelectedBooks() {
+      this.$store.dispatch("deleteSelectedBooks");
     }
-  }
+  },
 };
 </script>
 

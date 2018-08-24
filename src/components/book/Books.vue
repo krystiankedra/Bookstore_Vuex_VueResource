@@ -2,7 +2,7 @@
     <div class="row row-margin-top">
       <div class="col-md-12 margin-block">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <input type="text" v-model="filtredBookInputs" class="form-control input-filter-margin-bottom" placeholder="Search...">
           </div>
           <div class="col-md-2">
@@ -16,15 +16,20 @@
               @click="sortDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
           </div>
           <div class="col-md-2">
+            <label class="text-center">Select All</label>
+            <input
+              class="input-select-all-inputs"
+              type="checkbox"
+              v-model="inputToSelectAllBooks"
+              @input="toSelectAll">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 col-md-offset-10">
             <button class="btn btn-warning"
               @click="deleteSelectedBooks"><i class="fas fa-trash-alt"></i>Delete Selected</button>
           </div>
-          <div class="col-md-2">
-            <input class="form-control"
-              type="checkbox"
-              v-model="inputToSelectAllBooks"
-              @input="toSelectAll">Select All
-          </div>
+
         </div>
       </div>
       <app-book v-for="(book,index) in filteredBooks" :key="book.id" :book="book" :index="index" :inputToSelectAllBooks="inputToSelectAllBooks"></app-book>
@@ -102,6 +107,11 @@ export default {
 
 .margin-block {
   margin: 20px;
+}
+
+.input-select-all-inputs {
+  width:18px;
+  height: 18px;
 }
 </style>
 

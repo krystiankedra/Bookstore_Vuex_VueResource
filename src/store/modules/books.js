@@ -39,30 +39,32 @@ const mutations = {
         state.books[payload.index].description = payload.description
     },
     'SORT_TITLE': (state, payload) => {
-        if (!payload) {
-            state.sortTitleValue = true;
+        if (payload) {
+            state.sortTitleValue = !state.sortTitleValue;
             return state.books.sort(
-                (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? -1 : 1)
+                (element1, element2) =>
+                    element1.title.toLowerCase() < element2.title.toLowerCase() ? -1 : 1
             );
         } else {
-            state.sortTitleValue = false;
+            state.sortTitleValue = !state.sortTitleValue;
             return state.books.sort(
-                (element1, element2) => (element1.title.toLowerCase() < element2.title.toLowerCase() ? 1 : -1)
+                (element1, element2) =>
+                    element1.title.toLowerCase() < element2.title.toLowerCase() ? 1 : -1
             );
         }
     },
     'SORT_DESCRIPTION': (state, payload) => {
-        if (!payload) {
+        if (payload) {
             state.sortDescriptionValue = !state.sortDescriptionValue;
             return state.books.sort(
                 (element1, element2) =>
-                    element1.description < element2.description ? -1 : 1
+                    element1.description.toLowerCase() < element2.description.toLowerCase() ? -1 : 1
             );
         } else {
             state.sortDescriptionValue = !state.sortDescriptionValue;
             return state.books.sort(
                 (element1, element2) =>
-                    element1.description < element2.description ? 1 : -1
+                    element1.description.toLowerCase() < element2.description.toLowerCase() ? 1 : -1
             );
         }
     },
@@ -84,7 +86,7 @@ const mutations = {
         } else {
             state.selectedBooks.splice(payload.index, 1)
         }
-        console.log(state.selectedBooks)
+
     },
     'SET_INPUTS_TO_ALL': (state, payload) => {
         state.inputToSelectAll = payload;
@@ -100,7 +102,6 @@ const mutations = {
             } else {
                 state.selectedBooks.splice(payload.index, 1)
             }
-            console.log(state.selectedBooks)
         }
     }
 }

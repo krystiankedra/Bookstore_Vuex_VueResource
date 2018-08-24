@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <p v-show="showAverage">Average: {{filteredRates}}</p> 
         <p v-show="showAverage">Average: {{getHeadInput}}</p>
-        <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right" v-model="checkedBookInput" @input="checkedBook(book.id)">
+        <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="checkedBook(book.id)">
         </div>
       <div class="panel-body">
         <p><strong>Title:</strong> {{book.title}}</p>
@@ -21,7 +21,7 @@
         <div v-if="showEdit" class="form-group margin-edit-group">
           <label>Title:</label> <input class="form-control" :placeholder="book.title" v-model="newTitle">
           <label>Description:</label> <textarea class="form-control" :placeholder="book.description" v-model="newDescription" rows="6" cols="50"></textarea>
-          <label>New Rate:</label><input type="number" min="1" max="5" :placeholder="average" class="form-control" v-model="newRate">
+          <label>New Rate:</label><input type="number" min="1" max="5" :placeholder="average == Number(average) ? Number(average).toFixed(2) : 'No Rate Here'" class="form-control" v-model="newRate">
           <button class="btn btn-primary margin-button-top" @click="saveEditedData(book.id)"><i class="fas fa-cloud"></i>Save</button>
         </div>
       </div>
@@ -122,5 +122,10 @@ export default {
 }
 .margin-button-top {
   margin-top: 10px;
+}
+
+.input-select-all-inputs {
+  width:14px;
+  height: 14px;
 }
 </style>

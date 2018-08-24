@@ -21,7 +21,7 @@ export default {
 
 <style>
   body {
-    padding:30px;
+  padding:30px;
   }
   .slide-enter-active {
     animation: slide-in 500ms ease-out forwards;

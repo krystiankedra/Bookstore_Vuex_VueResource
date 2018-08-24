@@ -2,7 +2,7 @@
     <div class="row row-margin-top">
       <div class="col-md-12 margin-block">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <input type="text" v-model="filtredBookInputs" class="form-control input-filter-margin-bottom" placeholder="Search...">
           </div>
           <div class="col-md-2">
@@ -19,9 +19,15 @@
             <button class="btn btn-warning"
               @click="deleteSelectedBooks"><i class="fas fa-trash-alt"></i>Delete Selected</button>
           </div>
+          <div class="col-md-2">
+            <input class="form-control"
+              type="checkbox"
+              v-model="inputToSelectAllBooks"
+              @input="toSelectAll">Select All
+          </div>
         </div>
       </div>
-      <app-book v-for="(book,index) in filteredBooks" :key="book.id" :book="book" :index="index"></app-book>
+      <app-book v-for="(book,index) in filteredBooks" :key="book.id" :book="book" :index="index" :inputToSelectAllBooks="inputToSelectAllBooks"></app-book>
     </div>
 </template>
 
@@ -32,7 +38,8 @@ export default {
     return {
       sortTitleValue: false,
       sortDescriptionValue: false,
-      filtredBookInputs: ""
+      filtredBookInputs: "",
+      inputToSelectAllBooks: false,
     };
   },
   components: {
@@ -75,7 +82,10 @@ export default {
     },
     deleteSelectedBooks() {
       this.$store.dispatch("deleteSelectedBooks");
-    }
+    },
+    toSelectAll() {
+      this.$store.dispatch('toSelectAll' ,!this.inputToSelectAllBooks)
+    },
   },
 };
 </script>

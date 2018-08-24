@@ -2,7 +2,8 @@
  <div class="col-md-4">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <p v-show="showAverage">Average: {{filteredRates}}</p>
+        <p v-show="showAverage">Average: {{filteredRates}}</p> 
+        <p v-show="showAverage">Average: {{getHeadInput}}</p>
         <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right" v-model="checkedBookInput" @input="checkedBook(book.id)">
         </div>
       <div class="panel-body">
@@ -44,7 +45,7 @@ export default {
       newRate:null,
     };
   },
-  props: ["book", "index",],
+  props: ["book", "index","inputToSelectAllBooks"],
   methods: {
     deleteBook(bookId) {
       const book = {
@@ -95,6 +96,19 @@ export default {
         this.average = element.sum / element.rates
         }
       })
+    },
+    getHeadInput() {
+      if(this.$store.getters.inputToSelectAll) {
+        this.checkedBookInput = true;
+        const checkedBookDelete = {
+          bookId: this.book.id,
+          index: this.index,
+          checked: this.checkedBookInput,
+        }
+        this.$store.dispatch('deleteCheckedAll', checkedBookDelete)
+      } else {
+        this.checkedBookInput = false;
+      }
     }
   },
 };

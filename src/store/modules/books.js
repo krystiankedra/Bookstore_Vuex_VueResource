@@ -9,6 +9,7 @@ const state = {
     sortDescriptionValue: false,
     selectedBooks: [],
     rates: [],
+    inputToSelectAll: false,
 }
 
 const getters = {
@@ -17,6 +18,9 @@ const getters = {
     },
     rates: state => {
         return state.rates;
+    },
+    inputToSelectAll: state => {
+        return state.inputToSelectAll;
     }
 }
 
@@ -71,13 +75,32 @@ const mutations = {
     'UPDATE_RATE': (state, payload) => {
         state.rates = payload;
     },
-    'CHECKED_BOOK' : (state,payload) => {
+    'CHECKED_BOOK': (state, payload) => {
+
         if (payload.checked) {
-            state.selectedBooks.push(payload)
-        } else if (!payload.checked){
+            state.selectedBooks.unshift(payload)
+        } else if (!payload.checked) {
             state.selectedBooks.splice(payload.index, 1)
         } else {
             state.selectedBooks.splice(payload.index, 1)
+        }
+        console.log(state.selectedBooks)
+    },
+    'SET_INPUTS_TO_ALL': (state, payload) => {
+        state.inputToSelectAll = payload;
+    },
+    'DELETE_CHECKED_ALL_INPUTS': (state, payload) => {
+        if(state.selectedBooks.length > state.books.length) {
+            return false
+        } else {
+            if (payload.checked) {
+                state.selectedBooks.unshift(payload)
+            } else if (!payload.checked) {
+                state.selectedBooks.splice(payload.index, 1)
+            } else {
+                state.selectedBooks.splice(payload.index, 1)
+            }
+            console.log(state.selectedBooks)
         }
     }
 }
@@ -179,7 +202,7 @@ const actions = {
         commit('SORT_DESCRIPTION', payload)
     },
     checkedBook({ commit }, payload) {
-        commit('CHECKED_BOOK',payload)
+        commit('CHECKED_BOOK', payload)
     },
     deleteSelectedBooks({ commit }) {
         for (let i = 0; state.selectedBooks.length > i; ++i) {
@@ -189,9 +212,15 @@ const actions = {
                 }, error => {
                     console.log(error);
                 })
-            console.log(state.selectedBooks[i].index);
             commit('DELETE_SELECTED_BOOK', state.selectedBooks[i].index)
+            
         }
+    },
+    toSelectAll({ commit }, payload) {
+        commit('SET_INPUTS_TO_ALL', payload)
+    },
+    deleteCheckedAll({ commit }, payload) {
+        commit('DELETE_CHECKED_ALL_INPUTS', payload)
     },
 }
 

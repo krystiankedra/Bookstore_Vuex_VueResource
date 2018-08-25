@@ -8,12 +8,12 @@
           <div class="col-md-2">
             <button class="btn btn-primary" 
               :class="[sortTitleValue ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up']" 
-              @click="sortTitle(sortTitleValue = !sortTitleValue)">Sort Title</button>
+              @click="sortByTitle(sortTitleValue = !sortTitleValue)">Sort Title</button>
             </div>
           <div class="col-md-2">
             <button class="btn btn-primary" 
               :class="[sortDescriptionValue ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up']" 
-              @click="sortDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
+              @click="sortByDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
           </div>
           <div class="col-md-2">
             <label class="text-center">Select All</label>
@@ -27,7 +27,7 @@
         <div class="row">
           <div class="col-md-2 col-md-offset-10">
             <button class="btn btn-warning"
-              @click="deleteSelectedBooks"><i class="fas fa-trash-alt"></i>Delete Selected</button>
+              @click="deleteSelectedBook"><i class="fas fa-trash-alt"></i>Delete Selected</button>
           </div>
 
         </div>
@@ -51,7 +51,7 @@ export default {
     appBook: Book
   },
   mounted() {
-    this.$store.dispatch("loadBooks");
+    this.$store.dispatch("setBooksRates");
   },
   computed: {
     books() {
@@ -71,25 +71,25 @@ export default {
     },
   },
   methods: {
-    sortTitle(value) {
+    sortByTitle(value) {
       if (!value) {
-        this.$store.dispatch("sortTitle", value);
+        this.$store.dispatch("sortByTitle", value);
       } else {
-        this.$store.dispatch("sortTitle", value);
+        this.$store.dispatch("sortByTitle", value);
       }
     },
-    sortDescription(value) {
+    sortByDescription(value) {
       if (!value) {
-        this.$store.dispatch("sortDescription", value);
+        this.$store.dispatch("sortByDescription", value);
       } else {
-        this.$store.dispatch("sortDescription", value);
+        this.$store.dispatch("sortByDescription", value);
       }
     },
-    deleteSelectedBooks() {
-      this.$store.dispatch("deleteSelectedBooks");
+    deleteSelectedBook() {
+      this.$store.dispatch("deleteSelectedBook");
     },
     toSelectAll() {
-      this.$store.dispatch('toSelectAll' ,!this.inputToSelectAllBooks)
+      this.$store.dispatch('selectHeadCheckedInput' ,!this.inputToSelectAllBooks)
     },
   },
 };

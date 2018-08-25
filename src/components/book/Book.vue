@@ -4,7 +4,7 @@
       <div class="panel-heading">
         <p v-show="showAverage">Average: {{filteredRates}}</p> 
         <p v-show="showAverage">Average: {{getHeadInput}}</p>
-        <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="checkedBook(book.id)">
+        <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)">
         </div>
       <div class="panel-body">
         <p><strong>Title:</strong> {{book.title}}</p>
@@ -22,7 +22,7 @@
           <label>Title:</label> <input class="form-control" :placeholder="book.title" v-model="newTitle">
           <label>Description:</label> <textarea class="form-control" :placeholder="book.description" v-model="newDescription" rows="6" cols="50"></textarea>
           <label>New Rate:</label><input type="number" min="1" max="5" :placeholder="average == Number(average) ? Number(average).toFixed(2) : 'No Rate Here'" class="form-control" v-model="newRate">
-          <button class="btn btn-primary margin-button-top" @click="saveEditedData(book.id)"><i class="fas fa-cloud"></i>Save</button>
+          <button class="btn btn-primary margin-button-top" @click="editBook(book.id)"><i class="fas fa-cloud"></i>Save</button>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
     showEditGroup() {
       this.showEdit = !this.showEdit;
     },
-    saveEditedData(bookId) {
+    editBook(bookId) {
       const Editedbook = {
         title: this.newTitle,
         description: this.newDescription,
@@ -72,21 +72,21 @@ export default {
           this.newRate < 0) {
         alert('Fill Title, Description or fill up correctly Rate')
       } else {
-        this.$store.dispatch("updateBook", Editedbook);
+        this.$store.dispatch("editBook", Editedbook);
         this.newTitle = "";
         this.newDescription = "";
         this.newRate = null;
         this.showEdit = false;
       }
     },
-    checkedBook(bookId) {
+    selectCheckedBook(bookId) {
       this.checkedBookInput = !this.checkedBookInput;
-      const checkedBookDelete = {
+      const bookSelected= {
         bookId: bookId,
         index: this.index,
         checked: this.checkedBookInput,
       }
-      this.$store.dispatch('checkedBook', checkedBookDelete)
+      this.$store.dispatch('selectCheckedBook', bookSelected)
     }
   },
   computed: {
@@ -100,12 +100,12 @@ export default {
     getHeadInput() {
       if(this.$store.getters.inputToSelectAll) {
         this.checkedBookInput = true;
-        const checkedBookDelete = {
+        const bookSelected = {
           bookId: this.book.id,
           index: this.index,
           checked: this.checkedBookInput,
         }
-        this.$store.dispatch('deleteCheckedAll', checkedBookDelete)
+        this.$store.dispatch('selectAllInputsChecked', bookSelected)
       } else {
         this.checkedBookInput = false;
       }

@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="pull-right">
-        <button class="btn btn-success" @click.prevent="addBook">Add New Book</button>
+        <button class="btn btn-success" @click.prevent="addNewBook">Add New Book</button>
         </div>
     </div>
 </form>
@@ -34,8 +34,8 @@ export default {
     };
   },
   methods: {
-    addBook() {
-      this.$store.dispatch("addBook", this.book);
+    addNewBook() {
+      this.$store.dispatch("addNewBook", this.book);
       this.book.title = "";
       this.book.description = "";
     }

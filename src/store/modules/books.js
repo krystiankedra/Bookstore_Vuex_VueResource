@@ -34,11 +34,11 @@ const mutations = {
     'DELETE_BOOK': (state, payload) => {
         state.books.splice(payload.index, 1)
     },
-    'UPDATE_BOOK': (state, payload) => {
+    'EDIT_BOOK': (state, payload) => {
         state.books[payload.index].title = payload.title
         state.books[payload.index].description = payload.description
     },
-    'SORT_TITLE': (state, payload) => {
+    'SORT_BY_TITLE': (state, payload) => {
         if (payload) {
             state.sortTitleValue = !state.sortTitleValue;
             return state.books.sort(
@@ -53,7 +53,7 @@ const mutations = {
             );
         }
     },
-    'SORT_DESCRIPTION': (state, payload) => {
+    'SORT_BY_DESCRIPTION': (state, payload) => {
         if (payload) {
             state.sortDescriptionValue = !state.sortDescriptionValue;
             return state.books.sort(
@@ -68,16 +68,16 @@ const mutations = {
             );
         }
     },
-    'DELETE_SELECTED_BOOK': (state, payload) => {
+    'DELETE_CHECKED_BOOK': (state, payload) => {
         state.books.splice(payload, 1)
     },
     'SET_RATES': (state, payload) => {
         state.rates = payload
     },
-    'UPDATE_RATE': (state, payload) => {
+    'EDIT_RATE': (state, payload) => {
         state.rates = payload;
     },
-    'CHECKED_BOOK': (state, payload) => {
+    'SELECT_CHECKED_BOOK': (state, payload) => {
 
         if (payload.checked) {
             state.selectedBooks.unshift(payload)
@@ -88,10 +88,10 @@ const mutations = {
         }
 
     },
-    'SET_INPUTS_TO_ALL': (state, payload) => {
+    'SELECT_HEAD_CHECKED_INPUT': (state, payload) => {
         state.inputToSelectAll = payload;
     },
-    'DELETE_CHECKED_ALL_INPUTS': (state, payload) => {
+    'SELECT_ALL_INPUTS_CHECKED': (state, payload) => {
         if(state.selectedBooks.length > state.books.length) {
             return false
         } else {
@@ -107,7 +107,7 @@ const mutations = {
 }
 
 const actions = {
-    addBook({ commit }, payload) {
+    addNewBook({ commit }, payload) {
         Vue.http.post('http://bootcamp.opole.pl/books/add-book/87f4', payload, {
             emulateJSON: true
         })
@@ -127,7 +127,7 @@ const actions = {
             })
         commit('DELETE_BOOK', payload)
     },
-    updateBook({ commit }, payload) {
+    editBook({ commit }, payload) {
         const ratesList = [];
         Vue.http.post('http://bootcamp.opole.pl/books/edit-book/' + payload.bookId + '/87f4', {
             title: payload.title,
@@ -151,7 +151,7 @@ const actions = {
                                 for (let key in data) {
                                     ratesList.push(data[key])
                                 }
-                                commit('UPDATE_RATE', ratesList)
+                                commit('EDIT_RATE', ratesList)
                             })
                     }, error => {
                         console.log(error);
@@ -159,9 +159,9 @@ const actions = {
             }, error => {
                 console.log(error);
             })
-        commit('UPDATE_BOOK', payload)
+        commit('EDIT_BOOK', payload)
     },
-    loadBooks({ commit }) {
+    setBooksRates({ commit }) {
         const bookList = [];
         const ratesList = [];
         Vue.http.get('http://bootcamp.opole.pl/books/my-books/87f4')
@@ -196,16 +196,16 @@ const actions = {
         commit('SET_BOOKS', bookList)
         commit('SET_RATES', ratesList)
     },
-    sortTitle({ commit }, payload) {
-        commit('SORT_TITLE', payload)
+    sortByTitle({ commit }, payload) {
+        commit('SORT_BY_TITLE', payload)
     },
-    sortDescription({ commit }, payload) {
-        commit('SORT_DESCRIPTION', payload)
+    sortByDescription({ commit }, payload) {
+        commit('SORT_BY_DESCRIPTION', payload)
     },
-    checkedBook({ commit }, payload) {
-        commit('CHECKED_BOOK', payload)
+    selectCheckedBook({ commit }, payload) {
+        commit('SELECT_CHECKED_BOOK', payload)
     },
-    deleteSelectedBooks({ commit }) {
+    deleteSelectedBook({ commit }) {
         for (let i = 0; state.selectedBooks.length > i; ++i) {
             Vue.http.delete('http://bootcamp.opole.pl/books/delete-book/' + state.selectedBooks[i].bookId + '/87f4')
                 .then(response => {
@@ -213,15 +213,15 @@ const actions = {
                 }, error => {
                     console.log(error);
                 })
-            commit('DELETE_SELECTED_BOOK', state.selectedBooks[i].index)
+            commit('DELETE_CHECKED_BOOK', state.selectedBooks[i].index)
             
         }
     },
-    toSelectAll({ commit }, payload) {
-        commit('SET_INPUTS_TO_ALL', payload)
+    selectHeadCheckedInput({ commit }, payload) {
+        commit('SELECT_HEAD_CHECKED_INPUT', payload)
     },
-    deleteCheckedAll({ commit }, payload) {
-        commit('DELETE_CHECKED_ALL_INPUTS', payload)
+    selectAllInputsChecked({ commit }, payload) {
+        commit('SELECT_ALL_INPUTS_CHECKED', payload)
     },
 }
 

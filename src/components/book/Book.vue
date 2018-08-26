@@ -4,13 +4,12 @@
       <div class="panel-heading">
         <p v-show="showAverage">Average: {{filteredRates}}</p> 
         <p v-show="showAverage">Average: {{getHeadInput}}</p>
-        <span>ID: {{book.id}}</span> <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)">
+        <span>ID: {{book.id}} || Index: {{index}}</span> <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)">
         </div>
       <div class="panel-body">
         <p><strong>Title:</strong> {{book.title}}</p>
-        <p class="text-justify">Index: {{index}}</p>
         <p class="text-justify"><strong>Description:</strong> {{book.description}}</p>
-        <p class="text-justify"><strong>Average:</strong> {{average == Number(average) ? Number(average.toFixed(2)) : 'No Rate Here'}}</p>
+        <p><strong>Rate:</strong><star-rating v-model="average" :increment="0.01" :border-width="3" :star-size="35" :read-only="true" class="custom-text" :show-rating="isNaN(average) ? false : true"></star-rating></p>
       <div class="panel-footer">
         <div class="pull-left">
             <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i>Delete Book</button>
@@ -21,17 +20,23 @@
         <div v-if="showEdit" class="form-group margin-edit-group">
           <label>Title:</label> <input class="form-control" :placeholder="book.title" v-model="newTitle">
           <label>Description:</label> <textarea class="form-control" :placeholder="book.description" v-model="newDescription" rows="6" cols="50"></textarea>
-          <label>New Rate:</label><input type="number" min="1" max="5" :placeholder="average == Number(average) ? Number(average).toFixed(2) : 'No Rate Here'" class="form-control" v-model="newRate">
+          <label>New Rate:</label>
+          <star-rating v-model="newRate" :increment="0.5" :border-width="3" :star-size="35"></star-rating>
           <button class="btn btn-primary margin-button-top" @click="editBook(book.id)"><i class="fas fa-cloud"></i>Save</button>
         </div>
       </div>
+      
     </div>
     </div>
 </div>
 </template>
 
 <script>
+import StarRating from 'vue-star-rating'
 export default {
+  components : {
+    'star-rating' : StarRating
+  },
   data() {
     return {
       showAverage: false,
@@ -127,5 +132,16 @@ export default {
 .input-select-all-inputs {
   width:14px;
   height: 14px;
+}
+
+.custom-text {
+  font-weight: bold;
+  font-size: 1.9em;
+  border: 1px solid #cfcfcf;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  color: #999;
+  background: #fff;
 }
 </style>

@@ -8,7 +8,7 @@ import VueResource from 'vue-resource'
 Vue.use(VueRouter)
 Vue.use(VueResource);
 
-//Vue.http.options.root = 'http://bootcamp.opole.pl/books/';
+//Vue.http.options.root = 'http://bootcamp.opole.pl/books/'; Can't use because of local .json
 
 const router = new VueRouter({
   routes,

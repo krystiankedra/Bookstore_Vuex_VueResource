@@ -2,8 +2,7 @@
   <div class="col-md-4">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <p v-show="showAverage">Average: {{filteredRates}}</p>
-        <p v-show="showAverage">SelectAllFromHeadInput: {{getHeadInput}}</p>
+        <p v-show="showAverage">Average: {{filteredRates, getHeadInput}}</p>
         <p>
           <strong>Title:</strong> {{book.title}}
           <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)">
@@ -35,12 +34,12 @@
               <star-rating v-model="newRate" :increment="0.5" :border-width="3" :star-size="35" class="custom-text"></star-rating>
               <button class="btn btn-primary margin-button-top margin-button-bottom pull-right" @click="editBook(book.id)">
                 <i class="fas fa-cloud"></i> Save</button>
-              <div class="alert alert-success" v-if="newTitle.length > 0">
+              <div class="alert alert-success alert-margin-top" v-if="newTitle.length > 0">
                 <span>New Title is correct
                   <i class="fas fa-thumbs-up"></i>
                 </span>
               </div>
-              <div class="alert alert-success" v-if="newDescription.length > 0">
+              <div class="alert alert-success alert-margin-top" v-if="newDescription.length > 0">
                 <span>New Description is correct
                   <i class="fas fa-thumbs-up"></i>
                 </span>
@@ -220,5 +219,9 @@
 
   .label-margin-top {
     margin-top: 10px;
+  }
+
+  .alert-margin-top {
+    margin-top: 20px;
   }
 </style>

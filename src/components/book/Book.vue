@@ -9,7 +9,7 @@
       <div class="panel-body">
         <p><strong>Title:</strong> {{book.title}}</p>
         <p class="text-justify"><strong>Description:</strong> {{book.description}}</p>
-        <p><strong>Rate:</strong><star-rating v-model="average" :increment="0.01" :border-width="3" :star-size="35" :read-only="true" class="custom-text" :show-rating="isNaN(average) ? false : true"></star-rating></p>
+        <strong>Rate:</strong><star-rating v-model="average" :increment="0.01" :border-width="3" :star-size="35" :read-only="true" class="custom-text" :show-rating="isNaN(average) ? false : true"></star-rating>
       <div class="panel-footer">
         <div class="pull-left">
             <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i>Delete Book</button>

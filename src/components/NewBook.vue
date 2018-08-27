@@ -45,9 +45,13 @@ export default {
   },
   methods: {
     addNewBook() {
-      this.$store.dispatch("addNewBook", this.book);
-      this.book.title = "";
-      this.book.description = "";
+      if (this.book.title == '' || this.book.description == '') {
+        alert('Fill Title and Description')
+      } else {
+      this.$store.dispatch("addNewBook", this.book)
+      this.book.title = ""
+      this.book.description = ""
+      }
     }
   }
 };

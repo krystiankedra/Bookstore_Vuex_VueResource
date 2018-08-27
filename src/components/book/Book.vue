@@ -34,13 +34,18 @@
               <star-rating v-model="newRate" :increment="0.5" :border-width="3" :star-size="35" class="custom-text"></star-rating>
               <button class="btn btn-primary margin-button-top margin-button-bottom pull-right" @click="editBook(book.id)">
                 <i class="fas fa-cloud"></i> Save</button>
-              <div class="alert alert-success alert-margin-top" v-if="newTitle.length > 0">
+              <div class="alert alert-success alert-margin" v-if="newTitle.length > 0">
                 <span>New Title is correct
                   <i class="fas fa-thumbs-up"></i>
                 </span>
               </div>
-              <div class="alert alert-success alert-margin-top" v-if="newDescription.length > 0">
+              <div class="alert alert-success alert-margin" v-if="newDescription.length > 0">
                 <span>New Description is correct
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+              </div>
+              <div class="alert alert-success alert-margin" v-if="newRate > 0">
+                <span>New Rate is correct
                   <i class="fas fa-thumbs-up"></i>
                 </span>
               </div>
@@ -221,7 +226,8 @@
     margin-top: 10px;
   }
 
-  .alert-margin-top {
-    margin-top: 20px;
+  .alert-margin {
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 </style>

@@ -78,7 +78,6 @@ const mutations = {
         state.rates = payload;
     },
     'SELECT_CHECKED_BOOK': (state, payload) => {
-
         if (payload.checked) {
             state.selectedBooks.unshift(payload)
         } else if (!payload.checked) {

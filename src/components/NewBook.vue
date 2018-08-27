@@ -18,7 +18,7 @@
       <div class="row">
         <div class="pull-right">
           <button class="btn btn-success button-margin" @click.prevent="addNewBook">
-            <i class="fas fa-book-open"></i> Add New Book</button>
+            <i class="fas fa-external-link-square-alt"></i> Add New Book</button>
         </div>
       </div>
       <div class="row">

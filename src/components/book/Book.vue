@@ -11,7 +11,8 @@
       <div class="panel-body">
         <p class="text-justify">
           <strong>Description:</strong> {{book.description}}</p>
-        <strong>Rate:</strong>
+        <img :src="'/src/assets/' + bookPhoto">
+        <p><strong>Rate:</strong></p>
         <star-rating v-model="average" :increment="0.01" :border-width="3" :star-size="35" :read-only="true" class="custom-text"
           :show-rating="isNaN(average) ? false : true"></star-rating>
         <div class="panel-footer">
@@ -25,7 +26,7 @@
           </div>
           <div v-if="showEdit" class="ownModal" :class="[showEdit ? 'showMyModal' : '']">
             <div class="myModalContent">
-              <span class="close-button" @click="showEditGroup">&times;</span>
+              <span class="close-button" @click="showEditGroup"><i class="fas fa-times"></i></span>
               <label class="label-margin-top">Title:</label>
               <input class="form-control" :placeholder="book.title" v-model="newTitle">
               <label class="label-margin-top">Description:</label>
@@ -72,6 +73,7 @@
         newDescription: "",
         checkedBookInput: false,
         newRate: null,
+        bookPhoto: 'bookPhoto.png',
       };
     },
     props: ["book", "index", "inputToSelectAllBooks"],

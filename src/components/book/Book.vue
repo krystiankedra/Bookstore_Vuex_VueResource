@@ -3,13 +3,19 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <p v-show="showAverage">Average: {{filteredRates}}</p> 
-        <p v-show="showAverage">Average: {{getHeadInput}}</p>
-        <span>ID: {{book.id}} || Index: {{index}}</span> <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)">
+        <p v-show="showAverage">SelectAllFromHeadInput: {{getHeadInput}}</p>
+        <p><strong>Title:</strong> {{book.title}} <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)"></p>
         </div>
       <div class="panel-body">
-        <p><strong>Title:</strong> {{book.title}}</p>
         <p class="text-justify"><strong>Description:</strong> {{book.description}}</p>
-        <strong>Rate:</strong><star-rating v-model="average" :increment="0.01" :border-width="3" :star-size="35" :read-only="true" class="custom-text" :show-rating="isNaN(average) ? false : true"></star-rating>
+        <strong>Rate:</strong>
+        <star-rating v-model="average" 
+        :increment="0.01" 
+        :border-width="3" 
+        :star-size="35" 
+        :read-only="true" 
+        class="custom-text" 
+        :show-rating="isNaN(average) ? false : true"></star-rating>
       <div class="panel-footer">
         <div class="pull-left">
             <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i>Delete Book</button>
@@ -25,7 +31,6 @@
           <button class="btn btn-primary margin-button-top" @click="editBook(book.id)"><i class="fas fa-cloud"></i>Save</button>
         </div>
       </div>
-      
     </div>
     </div>
 </div>
@@ -40,9 +45,7 @@ export default {
   data() {
     return {
       showAverage: false,
-      average: {
-        type: Number
-      },
+      average: 3,
       showEdit: false,
       newTitle: "",
       newDescription: "",

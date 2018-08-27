@@ -50,7 +50,7 @@
     methods: {
       addNewBook() {
         if (this.book.title == '' || this.book.description == '') {
-          alert('Fill Title and Description')
+          this.$router.push( 'alertNewBook' )
         } else {
           this.$store.dispatch("addNewBook", this.book)
           this.book.title = ""

@@ -95,7 +95,7 @@
           this.newRate == '' ||
           this.newRate > 5 ||
           this.newRate < 0) {
-          alert('Fill Title, Description or fill up correctly Rate')
+          this.$router.push('alertEditBook')
         } else {
           this.$store.dispatch("editBook", Editedbook);
           this.newTitle = "";

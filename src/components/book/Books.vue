@@ -8,12 +8,12 @@
           <div class="col-md-2">
             <button class="btn btn-primary" 
               :class="[sortTitleValue ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up']" 
-              @click="sortByTitle(sortTitleValue = !sortTitleValue)">Sort Title</button>
+              @click="sortByTitle(sortTitleValue = !sortTitleValue)"> Sort Title</button>
             </div>
           <div class="col-md-2">
             <button class="btn btn-primary" 
               :class="[sortDescriptionValue ? 'fas fa-sort-alpha-down' : 'fas fa-sort-alpha-up']" 
-              @click="sortByDescription(sortDescriptionValue = !sortDescriptionValue)">Sort Description</button>
+              @click="sortByDescription(sortDescriptionValue = !sortDescriptionValue)"> Sort Description</button>
           </div>
           <div class="col-md-2">
             <label class="text-center">Select All</label>
@@ -27,7 +27,7 @@
         <div class="row">
           <div class="col-md-2 col-md-offset-10">
             <button class="btn btn-warning"
-              @click="deleteSelectedBook"><i class="fas fa-trash-alt"></i>Delete Selected</button>
+              @click="deleteSelectedBook"><i class="fas fa-trash-alt"></i> Delete Selected</button>
           </div>
 
         </div>

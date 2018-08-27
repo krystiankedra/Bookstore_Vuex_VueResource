@@ -8,7 +8,6 @@
                 <input class="form-control" type="text" v-model="book.title">
             </div>
             </div>
-
             <div class="form-group col-md-6">
                 <label for="lastname" class="col-2 col-form-label">Description:</label>
             <div class="col-10">
@@ -16,10 +15,21 @@
             </div>
             </div>
         </div>
-        <div class="pull-right">
-        <button class="btn btn-success" @click.prevent="addNewBook">Add New Book</button>
+        <div class="row">
+          <div class="pull-right">
+        <button class="btn btn-success button-margin" @click.prevent="addNewBook"><i class="fas fa-book-open"></i> Add New Book</button>
         </div>
+        </div>
+    <div class="row">
+      <div class="alert alert-success col-md-5 pull-left" v-if="book.title.length > 0">
+        <span>Title is correct <i class="fas fa-thumbs-up"></i></span>
+      </div>
+      <div class="alert alert-success col-md-5 pull-right" v-if="book.description.length > 0">
+        <span>Description is correct <i class="fas fa-thumbs-up"></i></span>
+      </div>
     </div>
+    </div>
+
 </form>
 </template>
 
@@ -47,6 +57,10 @@ export default {
 <style scoped>
 form {
   margin-top: 10px;
+}
+
+.button-margin {
+  margin:20px;
 }
 </style>
 

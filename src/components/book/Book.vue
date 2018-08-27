@@ -18,17 +18,23 @@
         :show-rating="isNaN(average) ? false : true"></star-rating>
       <div class="panel-footer">
         <div class="pull-left">
-            <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i>Delete Book</button>
+            <button class="btn btn-danger" @click="deleteBook(book.id)"><i class="fas fa-trash"></i> Delete Book</button>
         </div>
         <div class="pull-right">
-            <button class="btn btn-success" @click="showEditGroup"><i class="fas fa-user-edit"></i>Edit Book</button>
+            <button class="btn btn-success" @click="showEditGroup"><i class="fas fa-user-edit"></i> Edit Book</button>
         </div>
         <div v-if="showEdit" class="form-group margin-edit-group">
           <label>Title:</label> <input class="form-control" :placeholder="book.title" v-model="newTitle">
           <label>Description:</label> <textarea class="form-control" :placeholder="book.description" v-model="newDescription" rows="6" cols="50"></textarea>
           <label>New Rate:</label>
           <star-rating v-model="newRate" :increment="0.5" :border-width="3" :star-size="35"></star-rating>
-          <button class="btn btn-primary margin-button-top" @click="editBook(book.id)"><i class="fas fa-cloud"></i>Save</button>
+          <button class="btn btn-primary margin-button-top margin-button-bottom" @click="editBook(book.id)"><i class="fas fa-cloud"></i> Save</button>
+          <div class="alert alert-success" v-if="newTitle.length > 0">
+            <span>New Title is correct <i class="fas fa-thumbs-up"></i></span>
+          </div>
+          <div class="alert alert-success" v-if="newDescription.length > 0">
+            <span>New Description is correct <i class="fas fa-thumbs-up"></i></span>
+          </div>
         </div>
       </div>
     </div>
@@ -146,5 +152,9 @@ export default {
   border-radius: 5px;
   color: #999;
   background: #fff;
+}
+
+.margin-button-bottom {
+  margin-bottom: 10px;
 }
 </style>

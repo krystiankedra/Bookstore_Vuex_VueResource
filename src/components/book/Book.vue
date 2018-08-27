@@ -6,8 +6,7 @@
         <p v-show="showAverage">SelectAllFromHeadInput: {{getHeadInput}}</p>
         <p>
           <strong>Title:</strong> {{book.title}}
-          <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput"
-            @input="selectCheckedBook(book.id)">
+          <input type="checkbox" class="pull-right input-select-all-inputs" v-model="checkedBookInput" @input="selectCheckedBook(book.id)">
         </p>
       </div>
       <div class="panel-body">
@@ -25,25 +24,27 @@
             <button class="btn btn-success" @click="showEditGroup">
               <i class="fas fa-user-edit"></i> Edit Book</button>
           </div>
-          <div v-if="showEdit" class="form-group margin-edit-group">
-            <label>Title:</label>
-            <input class="form-control" :placeholder="book.title" v-model="newTitle">
-            <label>Description:</label>
-            <textarea class="form-control" :placeholder="book.description" v-model="newDescription"
-              rows="6" cols="50"></textarea>
-            <label>New Rate:</label>
-            <star-rating v-model="newRate" :increment="0.5" :border-width="3" :star-size="35"></star-rating>
-            <button class="btn btn-primary margin-button-top margin-button-bottom" @click="editBook(book.id)">
-              <i class="fas fa-cloud"></i> Save</button>
-            <div class="alert alert-success" v-if="newTitle.length > 0">
-              <span>New Title is correct
-                <i class="fas fa-thumbs-up"></i>
-              </span>
-            </div>
-            <div class="alert alert-success" v-if="newDescription.length > 0">
-              <span>New Description is correct
-                <i class="fas fa-thumbs-up"></i>
-              </span>
+          <div v-if="showEdit" class="ownModal" :class="[showEdit ? 'showMyModal' : '']">
+            <div class="myModalContent">
+              <span class="close-button" @click="showEditGroup">&times;</span>
+              <label class="label-margin-top">Title:</label>
+              <input class="form-control" :placeholder="book.title" v-model="newTitle">
+              <label class="label-margin-top">Description:</label>
+              <textarea class="form-control settings-text-area" :placeholder="book.description" v-model="newDescription" rows="10" cols="5"></textarea>
+              <label class="label-margin-top">New Rate:</label>
+              <star-rating v-model="newRate" :increment="0.5" :border-width="3" :star-size="35" class="custom-text"></star-rating>
+              <button class="btn btn-primary margin-button-top margin-button-bottom pull-right" @click="editBook(book.id)">
+                <i class="fas fa-cloud"></i> Save</button>
+              <div class="alert alert-success" v-if="newTitle.length > 0">
+                <span>New Title is correct
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+              </div>
+              <div class="alert alert-success" v-if="newDescription.length > 0">
+                <span>New Description is correct
+                  <i class="fas fa-thumbs-up"></i>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -61,7 +62,7 @@
     data() {
       return {
         showAverage: false,
-        average: 3,
+        average: null,
         showEdit: false,
         newTitle: "",
         newDescription: "",
@@ -136,22 +137,22 @@
       }
     },
   };
-
 </script>
-
-
 
 <style scoped>
   .margin-edit-group {
     margin-top: 40px;
   }
+
   .margin-button-top {
     margin-top: 10px;
   }
+
   .input-select-all-inputs {
     width: 14px;
     height: 14px;
   }
+
   .custom-text {
     font-weight: bold;
     font-size: 1.9em;
@@ -162,8 +163,62 @@
     color: #999;
     background: #fff;
   }
+
   .margin-button-bottom {
     margin-bottom: 15px;
   }
 
+  .ownModal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  }
+
+  .myModalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 50%;
+    border-radius: 0.5rem;
+  }
+
+  .close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+  }
+
+  .close-button:hover {
+    background-color: darkgray;
+  }
+
+  .showMyModal {
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+  }
+
+  .settings-text-area {
+    resize: none;
+  }
+
+  .label-margin-top {
+    margin-top: 10px;
+  }
 </style>

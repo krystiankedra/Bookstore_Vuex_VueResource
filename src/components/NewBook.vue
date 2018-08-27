@@ -11,7 +11,7 @@
         <div class="form-group col-md-6">
           <label for="lastname" class="col-2 col-form-label">Description:</label>
           <div class="col-10">
-            <textarea class="form-control" type="text" v-model="book.description" rows="4"></textarea>
+            <textarea class="form-control settings-text-area" type="text" v-model="book.description" rows="7"></textarea>
           </div>
         </div>
       </div>
@@ -69,5 +69,8 @@
   }
   .button-margin {
     margin: 20px;
+  }
+  .settings-text-area {
+    resize: none;
   }
 </style>

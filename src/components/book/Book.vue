@@ -138,7 +138,7 @@
           }
           setTimeout(() => {
             this.$store.dispatch('selectAllInputsChecked', bookSelected)
-          }, 1000);
+          }, 500);
  
         } else {
           this.checkedBookInput = false;

@@ -136,7 +136,10 @@
             index: this.index,
             checked: this.checkedBookInput,
           }
-          this.$store.dispatch('selectAllInputsChecked', bookSelected)
+          setTimeout(() => {
+            this.$store.dispatch('selectAllInputsChecked', bookSelected)
+          }, 1000);
+ 
         } else {
           this.checkedBookInput = false;
         }

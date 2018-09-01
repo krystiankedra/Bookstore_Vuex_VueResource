@@ -212,8 +212,7 @@ const actions = {
                 }, error => {
                     console.log(error);
                 })
-            commit('DELETE_CHECKED_BOOK', state.selectedBooks[i].index)
-            
+            commit('DELETE_CHECKED_BOOK', state.selectedBooks[i].index)   
         }
     },
     selectHeadCheckedInput({ commit }, payload) {
